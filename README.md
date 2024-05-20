@@ -61,18 +61,22 @@ mdadm /dev/md0 --fail /dev/sde
 
 Удалим "сломанный" диск из рейда и вернем обратно, будто новый
 ![images2](./images/image_raid_15.png)
-```bash
-#момент построения рейда я пропустил, слишком быстро было
-```
+
+момент построения рейда я пропустил, слишком быстро было
+
 ![images2](./images/image_raid_16.png)
 
 - Этап 5: Создадим GPT раздел и 5 партиций и смонтируем их на диск
 ```bash
-parted -s /dev/md0 mklabel gpt #Создаем раздел GPT на RAID
-parted /dev/md0 mkpart primary ext4 0% 20% #Создаем партиции (5 комманд с шагом в 20%) 
-for i in $(seq 1 5); do sudo mkfs.ext4 /dev/md0p$i; done # Создаем на этих партициях ФС
+#Создаем раздел GPT на RAID
+parted -s /dev/md0 mklabel gpt
+#Создаем партиции (5 комманд с шагом в 20%)
+parted /dev/md0 mkpart primary ext4 0% 20%
+# Создаем на этих партициях ФС
+for i in $(seq 1 5); do sudo mkfs.ext4 /dev/md0p$i; done 
+# Монтируем их по каталогам
 mkdir -p /raid/part{1,2,3,4,5}
-for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done # Монтируем их по каталогам
+for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done 
 ```
 ![images2](./images/image_raid_17.png)
 ![images2](./images/image_raid_18.png)
