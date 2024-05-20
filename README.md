@@ -32,6 +32,7 @@ sudo fdisk -l
 ![images2](./images/image_raid_6.png)
 
 Проверяем
+
 ![images2](./images/image_raid_7.png)
 
 Раз у нас остался пятый диск, можно попробовать добавить его в raid в качестве горячей замены
